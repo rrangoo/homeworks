@@ -1,0 +1,7 @@
+Container contains 6 elements:
+1: Bus, fuel tank capacity = 3, fuel spending = 57.0, passenger seats = 6, comparison parameter = 5.263157894736842
+2: Truck, fuel tank capacity = 9, fuel spending = 65.0, carrying capacity = 94, comparison parameter = 13.846153846153847
+3: Car, fuel tank capacity = 3, fuel spending = 5.0, max speed = 5, comparison parameter = 60.0
+4: Truck, fuel tank capacity = 72, fuel spending = 23.0, carrying capacity = 5, comparison parameter = 313.04347826086956
+5: Bus, fuel tank capacity = 56, fuel spending = 3.0, passenger seats = 44, comparison parameter = 1866.6666666666667
+6: Car, fuel tank capacity = 76, fuel spending = 2.0, max speed = 45, comparison parameter = 3800.0
