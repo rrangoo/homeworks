@@ -23,5 +23,5 @@ void out(Bus &bus, std::ofstream &output) {
 
 // Параматр для сравнения.
 double distance(Bus &bus) {
-    return bus.gaz / bus.waste;
+    return bus.gaz / bus.waste * 100;
 }
