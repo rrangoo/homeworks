@@ -18,6 +18,7 @@ void inRnd(Bus &bus);
 // Вывод параметров автобуса в форматируемый поток.
 void out(Bus &bus, std::ofstream &output);
 
+
 // Максимальное расстояние которое может пройти транспотное средство.
 double distance(Bus &bus);
 

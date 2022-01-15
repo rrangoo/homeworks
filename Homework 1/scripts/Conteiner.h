@@ -21,6 +21,7 @@ void inRnd(Container &container, int size);
 // Вывод содержимого контейнера в указанный поток.
 void out(Container &container, std::ofstream &output);
 
+
 // Метод для перемещения ссылок.
 void swap(Vehicle *a, Vehicle *b);
 

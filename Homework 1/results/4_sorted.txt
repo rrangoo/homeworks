@@ -1,0 +1,9 @@
+Sorted container:
+Container contains 7 elements.
+0: Truck: gaz: 46 waste: 74 carry: 26 distance: 62.1622
+1: Bus:  gaz: 36 waste: 52 seats: 15 distance: 69.2308
+2: Car: gaz: 74 waste: 62 speed: 74 distance: 119.355
+3: Bus:  gaz: 63 waste: 48 seats: 9 distance: 131.25
+4: Bus:  gaz: 83 waste: 63 seats: 17 distance: 131.746
+5: Bus:  gaz: 0 waste: 0 seats: 0 distance: -nan
+6: Bus:  gaz: 45 waste: 26 seats: 8 distance: 173.077

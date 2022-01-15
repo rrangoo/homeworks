@@ -15,11 +15,12 @@ void inRnd(Bus &bus) {
 // Вывод параметров в форматируемый поток.
 void out(Bus &bus, std::ofstream &output) {
     output << "Bus: "
-    << "gaz: " << bus.gaz
+    << " gaz: " << bus.gaz
     << " waste: " << bus.waste
     << " seats: " << bus.seats
     << " distance: " << distance(bus);
 }
+
 
 // Параматр для сравнения.
 double distance(Bus &bus) {

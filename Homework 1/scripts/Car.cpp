@@ -18,7 +18,7 @@ void out(Car &car, std::ofstream &output) {
            << "gaz: " << car.gaz
            << " waste: " << car.waste
            << " speed: " << car.speed
-           << " distance " << distance(car);
+           << " distance: " << distance(car);
 }
 
 // Параматр для сравнения.

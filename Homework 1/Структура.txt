@@ -1,0 +1,27 @@
+struct container:
+тип имя размер idx
+int length 4 0
+Vehicle* data 4*length*48
+
+struct vehicle:
+тип имя размер idx
+enum key 4 0
+Bus bus 14 4
+Car car 14 4
+Truck 16 4
+
+struct Bus:
+short seats 2 0
+int gaz 4 0
+double waste 8 10
+
+struct Car:
+short speed 2 0
+int gaz 4 0
+double waste 8 10
+
+struct Truck:
+int carry 4 0
+int gaz 4 0
+double waste 8 10
+

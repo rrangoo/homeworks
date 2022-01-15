@@ -67,6 +67,7 @@ void out(Vehicle &vehicle, std::ofstream &output) {
     output << "\n";
 }
 
+
 // Параметр сортировки.
 double compareValue(Vehicle &vehicle) {
     switch (vehicle.typeOfVehicle) {

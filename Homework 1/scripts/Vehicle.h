@@ -29,6 +29,7 @@ Vehicle *inRnd();
 // Вывод обобщения транспорта.
 void out(Vehicle &vehicle, std::ofstream &output);
 
+
 // Параметр сортировки.
 double compareValue(Vehicle &vehicle);
 

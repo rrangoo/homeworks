@@ -53,6 +53,8 @@ int main(int argc, char *argv[]) {
     unsortedOutput << "Filled container:\n";
     out(container, unsortedOutput);
     std::cout << "Unsorted container filled!\n";
+    
+    
 
     // Сортировка.
     std::cout << "Sorting. . .\n";
@@ -76,7 +78,7 @@ int main(int argc, char *argv[]) {
 
     // Рассчет времени работы.
     double seconds = (double)(end - start) / CLOCKS_PER_SEC;
-    std::cout << "Time: " << seconds;
+    std::cout << "Time: " << seconds << "\n";
 
     return 0;
 }

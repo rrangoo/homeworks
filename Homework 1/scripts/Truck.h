@@ -18,6 +18,7 @@ void inRnd(Truck &truck);
 // Вывод параметров грузовика в форматируемый поток.
 void out(Truck &truck, std::ofstream &output);
 
+
 // Максимальное расстояние которое может пройти транспотное средство.
 double distance(Truck &truck);
 

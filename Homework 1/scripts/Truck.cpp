@@ -21,6 +21,7 @@ void out(Truck &truck, std::ofstream &output) {
            << " distance: " << distance(truck);
 }
 
+
 // Параматр для сравнения.
 double distance(Truck &truck) {
     return truck.gaz / truck.waste * 100;
