@@ -1,19 +1,24 @@
+
+#ifndef HOMEWORK_1_BUS_H
+#define HOMEWORK_1_BUS_H
 #include "Vehicle.h"
 
-class Bus: public Vehicle{
+class Bus : public Vehicle{
 private:
-    // Максимальная скорость.
-    short max_seats;
-
+    short seats;
 public:
-    // Расчет максимально возможного расстояния, которое может проехать автомобиль.
-    double max_distance() override;
 
-    // Вывод в файл.
-    bool Out(FILE *file) override;
-    // Ввод из файла.
-    int In(FILE *file) override;
-    // Ввод случайных полей.
-    bool InRnd() override;
+    Bus(){
+        seats = 0;
+    }
+// Ввод параметров машины из файла.
+    void in(std::ifstream &input) override;
+
+// Случайный ввод параметров машины.
+    void inRnd() override;
+
+// Вывод параметров машины в форматируемый поток.
+    void out(std::ofstream &output) override;
 };
 
+#endif //HOMEWORK_1_BUS_H

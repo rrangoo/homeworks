@@ -1,19 +1,24 @@
+
+#ifndef HOMEWORK_1_TRUCK_H
+#define HOMEWORK_1_TRUCK_H
 #include "Vehicle.h"
 
-// Содержит описание класса "Легковой автомобиль".
-class Truck: public Vehicle{
+class Truck : public Vehicle{
 private:
-    // Грузоподъемность.
-    int max_weight;
-
+    short carry;
 public:
-    // Расчет максимально возможного расстояния, которое может проехать автомобиль.
-    double max_distance() override;
 
-    // Вывод в файл.
-    bool Out(FILE *file) override;
-    // Ввод из файла.
-    int In(FILE *file) override;
-    // Ввод случайных полей.
-    bool InRnd() override;
+    Truck(){
+        carry = 0;
+    }
+// Ввод параметров машины из файла.
+    void in(std::ifstream &input) override;
+
+// Случайный ввод параметров машины.
+    void inRnd() override;
+
+// Вывод параметров машины в форматируемый поток.
+    void out(std::ofstream &output) override;
 };
+
+#endif //HOMEWORK_1_TRUCK_H

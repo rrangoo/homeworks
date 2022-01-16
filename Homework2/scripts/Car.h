@@ -1,21 +1,25 @@
+
+#ifndef HOMEWORK_1_CAR_H
+#define HOMEWORK_1_CAR_H
 #include "Vehicle.h"
 
-// Содержит описание класса "Легковой автомобиль".
-class Car : public Vehicle {
+class Car : public Vehicle{
 private:
-    // Максимальная скорость.
-    short max_speed;
+    short speed;
 
 public:
-    // Расчет максимально возможного расстояния, которое может проехать автомобиль.
-    virtual double max_distance() override;
 
-    // Вывод в файл.
-    bool Out(FILE *file) override;
+    Car(){
+        speed = 0;
+    }
+// Ввод параметров машины из файла.
+    void in(std::ifstream &input) override;
 
-    // Ввод из файла.
-    int In(FILE *file) override;
+// Случайный ввод параметров машины.
+    void inRnd() override;
 
-    // Ввод случайных полей.
-    bool InRnd() override;
+// Вывод параметров машины в форматируемый поток.
+    void out(std::ofstream &output) override;
 };
+
+#endif //HOMEWORK_1_CAR_H

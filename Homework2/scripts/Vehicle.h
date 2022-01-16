@@ -1,28 +1,31 @@
-#ifndef TASK2_VEHICLE_H
-#define TASK2_VEHICLE_H
 
-#include "stdio.h"
-#include "stdlib.h"
+#ifndef HOMEWORK_1_VEHICLE_H
+#define HOMEWORK_1_VEHICLE_H
+#include "fstream"
 
-// Родительский класс всех транспортных средств.
 class Vehicle {
 protected:
-    // Емкость бензобака в литрах.
-    int gaz_tank = 0;
-
-    // Расход топлива на 100км в литрах.
-    double waste = 0;
+    int gaz;
+    double waste;
 
 public:
-    // Расчет максимально возможного расстояния, которое может проехать автомобиль.
-    virtual double max_distance() = 0;
+    Vehicle(){
+        gaz = 0;
+        waste = 0;
+    }
+// Ввод обобщения транспорта.
+    virtual void in(std::ifstream &input) = 0;
 
-    // Вывод в файл.
-    virtual bool Out(FILE *file) = 0;
-    // Ввод из файла.
-    virtual int In(FILE *file) = 0;
-    // Ввод случайных полей.
-    virtual bool InRnd() = 0;
+// Случайный ввод обобщения транспорта.
+    virtual void inRnd() = 0;
+
+// Вывод обобщения транспорта.
+    virtual void out(std::ofstream &output) = 0;
+
+// Параметр сортировки.
+    double compareValue() const{
+        return gaz / waste * 100;
+    }
 };
 
-#endif //TASK2_VEHICLE_H
+#endif //HOMEWORK_1_VEHICLE_H

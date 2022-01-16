@@ -10,9 +10,8 @@ import Truck
 def file_input(cont, vehicle_data):
     # Convert each string to vehicle array.
     for vehicle in vehicle_data:
-
         # Check type.
-        type_of_vehicle = vehicle[0]
+        type_of_vehicle = vehicle.split(" ")[0]
 
         # Create truck.
         if type_of_vehicle == '1':

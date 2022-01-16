@@ -1,32 +1,36 @@
+
+#ifndef HOMEWORK_1_CONTEINER_H
+#define HOMEWORK_1_CONTEINER_H
 #include "Vehicle.h"
+#include "Car.h"
+#include "Bus.h"
+#include "Truck.h"
 
-// Простейший контейнер.
 class Container {
-private:
-    // Длинна контейнера.
-    int len;
+    int length;
+    Vehicle **data;
 
-    // Массив транспортных средств.
-    Vehicle **vehicles;
 public:
-    // Инициализация контейнера.
-    void Init(int *size);
 
-    // Удаление контейнера.
-    void Clear();
+	Container(){
+		data = new Vehicle *[10000];
+	}
+    // Очистка контейнера от элементов (освобождение памяти).
+    ~Container();
 
-    // Ввод содержимого.
-    void In(FILE *file, int size);
+// Ввод содержимого контейнера из указанного потока.
+    void in(std::ifstream &input);
 
-    // Случайный ввод.
-    void InRnd(int size);
+// Случайный ввод содержимого контейнера.
+    void inRnd(int size);
 
-    // Вывод содержимого.
-    void Out(FILE *file);
+// Вывод содержимого контейнера в указанный поток.
+    void out(std::ofstream &output);
 
+    void Heapify(int n, int i);
 
-    void siftDown(Vehicle **arr, int root, int bottom);
-
-    // Сортировка.
+// Сортировка.
     void HeapSort();
+
 };
+#endif //HOMEWORK_1_CONTEINER_H

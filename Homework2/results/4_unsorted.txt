@@ -1,0 +1,9 @@
+Filled container:
+Container contains 7 elements.
+0: Bus: gaz: 83 waste: 63 speed: 17 distance 131.746
+1: Car: gaz: 74 waste: 62 speed: 74 distance 119.355
+2: Bus: gaz: 36 waste: 52 speed: 15 distance 69.2308
+3: Bus: gaz: 45 waste: 26 speed: 8 distance 173.077
+4: Truck: gaz: 46 waste: 74 speed: 26 distance 62.1622
+5: Bus: gaz: 63 waste: 48 speed: 9 distance 131.25
+6: Bus: gaz: 0 waste: 0 speed: 0 distance -nan

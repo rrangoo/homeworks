@@ -1,118 +1,99 @@
 #include "Container.h"
-#include "Car.h"
-#include "Bus.h"
-#include "Truck.h"
 
-// Инициализация.
-void Container::Init(int *size) {
-    vehicles = new Vehicle *[*size];
-    len = 0;
-}
-
-// Очистка контейнера.
-void Container::Clear() {
-    for (int i = 0; i < len; ++i) {
-        delete vehicles[i];
+// Отчистка данных.
+Container::~Container() {
+    for (int i = 0; i < length; i++) {
+        delete data[i];
     }
-    delete vehicles;
-    len = 0;
+    delete data;
+    length = 0;
 }
 
-// Ввод содержимого контейнера из файла.
-void Container::In(FILE *file, int size) {
-    int result, number_type;
-    while (len < size) {
-        result = 1;
-        if (fscanf(file, "%d", &number_type) == EOF) {
-            return;
-        }
-        switch (number_type) {
+// Ввод данных в поток.
+void Container::in(std::ifstream &input) {
+    int type;
+    while (!input.eof()) {
+        input >> type;
+        switch (type) {
+            case 0:
+                data[length] = new Car();
+                break;
             case 1:
-                vehicles[len] = new Car();
+                data[length] = new Bus();
                 break;
             case 2:
-                vehicles[len] = new Bus();
+                data[length] = new Truck();
                 break;
-            case 3:
-                vehicles[len] = new Truck();
+        }
+        data[length]->in(input);
+        length++;
+    }
+}
+
+// Ввод случайных данных в форматируемый поток.
+void Container::inRnd(int size) {
+    while (length < size) {
+        int type = rand() % 3;
+
+        switch (type) {
+            case 0:
+                data[length] = new Car();
                 break;
-            default:
-                result = 0;
+            case 1:
+                data[length] = new Bus();
+                break;
+            case 2:
+                data[length] = new Truck();
+                break;
         }
 
-        result = (result) ? vehicles[len]->In(file) : 0;
+        data[length]->inRnd();
 
-        if (result == 1) {
-            len++;
-        } else if (result == 2) {
-            return;
-        } else {
-            delete vehicles[len];
+        if (data[length] != nullptr) {
+            length++;
         }
     }
 }
 
-// Случайный ввод.
-void Container::InRnd(int size) {
-    while(len < size) {
-        switch (rand() % 3) {
-            case 0: vehicles[len] = new Car(); break;
-            case 1: vehicles[len] = new Bus(); break;
-            case 2: vehicles[len] = new Truck(); break;
-        }
-        vehicles[len++]->InRnd();
+// Вывод данных.
+void Container::out(std::ofstream &output) {
+    output << "Container contains " << length << " elements.\n";
+    for (int i = 0; i < length; i++) {
+        output << i << ": ";
+        data[i]->out(output);
     }
 }
 
-// Вывод содержимого.
-void Container::Out(FILE *file) {
-    fprintf(file, "Size = %d.\n", len);
-    for(int i = 0; i < len; i++) {
-        fprintf(file, "%d: ", i);
-        vehicles[i]->Out(file);
+// Реализация сортировки.
+// Меняем местами элементы.
+template<typename T>
+void swap(T &a, T &b) {
+    T temp(std::move(a));
+    a = std::move(b);
+    b = std::move(temp);
+}
+// Определяем индексы.
+void Container::Heapify(int x, int y) {
+    int largest = y;
+    int l = 2 * y + 1;
+    int r = 2 * y + 2;
+
+    if (l < x && data[l]->compareValue() > data[largest]->compareValue())largest = l;
+    if (r < x && data[r]->compareValue() > data[largest]->compareValue())largest = r;
+
+    if (largest != y) {
+        swap(data[y], data[largest]);
+        Heapify(x, largest);
     }
 }
+// Сортировка.
+void Container::HeapSort() {
+    int n = length;
+    for (int i = n / 2 - 1; i >= 0; i--)
+        Heapify(n, i);
 
-void Container::siftDown(Vehicle **arr, int root, int bottom) {
-    int maxChild; // индекс максимального потомка
-    int done = 0; // флаг того, что куча сформирована
-    // Пока не дошли до последнего ряда
-    while ((root * 2 <= bottom) && (!done))
-    {
-        if (root * 2 == bottom)    // если мы в последнем ряду,
-            maxChild = root * 2;    // запоминаем левый потомок
-            // иначе запоминаем больший потомок из двух
-        else if (vehicles[root * 2]->max_distance() > vehicles[root * 2 + 1]->max_distance())
-            maxChild = root * 2;
-        else
-            maxChild = root * 2 + 1;
-        // если элемент вершины меньше максимального потомка
-        if (vehicles[root]->max_distance() < vehicles[maxChild]->max_distance())
-        {
-            Vehicle *temp = vehicles[root]; // меняем их местами
-            vehicles[root] = vehicles[maxChild];
-            vehicles[maxChild] = temp;
-            root = maxChild;
-        }
-        else // иначе
-            done = 1; // пирамида сформирована
+    for (int i = n - 1; i >= 0; i--) {
+        swap(data[0], data[i]);
+        Heapify(i, 0);
     }
 }
-
-// Основная функция, выполняющая пирамидальную сортировку
-void Container::HeapSort()
-{
-    // Формируем нижний ряд пирамиды
-    for (int i = (len / 2); i >= 0; i--)
-        siftDown(vehicles, i, len - 1);
-    // Просеиваем через пирамиду остальные элементы
-    for (int i = len - 1; i >= 1; i--)
-    {
-        Vehicle *temp = vehicles[0];
-        vehicles[0] = vehicles[i];
-        vehicles[i] = temp;
-        siftDown(vehicles, 0, i - 1);
-    }
-}
-
-

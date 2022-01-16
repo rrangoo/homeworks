@@ -2,122 +2,80 @@
 #include "time.h"
 #include "string.h"
 #include "stdlib.h"
-#include <sys/stat.h>
 #include "Container.h"
 
-// Вывод при некорректных аргументах при запуске.
-void error() {
-    printf("incorrect qualifier value!\n  Waited:\n     command -f infile outfile01 outfile02\n");
-    printf("  Or:\n     command -n number outfile01 outfile02\n");
-}
-
-//
-bool isFile(char *argv[], int *size) {
-    if (!strcmp(argv[1], "-f")) { return true; }
-    else if (!strcmp(argv[1], "-n")) { *size = atoi(argv[2]); }
-    return false;
-}
-
 int main(int argc, char *argv[]) {
-
-    // начало отсчета времени.
-    unsigned int start_time =  clock();
-
+    // Проверка аргументов на входе.
     if (argc != 5) {
-        error();
+        std::cout << "incorrect command line!\n"
+                     "command <-n/-f> <number(0-10000)/input file> <unsorted file> <sorted file>\n";
         return 1;
     }
-    printf("Start. . .\n");
 
-    int size;
-    FILE *file;
+    // Начало отсчета.
+    clock_t start = clock();
 
-    printf("Generating file pathes. . .\n");
-
-    // Путь к файлу с тестами.
-    const char *test_file;
-
-    printf("File pathes created.\n");
-
-    printf("Container creating. . .\n");
-
-    // Создаем новый контейнер.
+    // Инициализация контейнера.
+    std::cout << "Init container. . .\n";
     Container *container = new Container();
+    std::cout << "Init container finished!\n";
 
-    printf("Container created.\n");
-
-    // Проверяем тип ввода данных.
-    if (isFile(argv, &size)) {
-
-        test_file = argv[2];
-        // Если ввод с файла.
-        struct stat buffer;
-
-        // Проверка файла.
-        if (stat(test_file, &buffer)) {
-            printf("Invalid file name!\n");
-            return 4;
-        }
-
-        // Считываем данные из файла.
-        file = fopen(test_file, "r");
-        fscanf(file, "%d", &size);
-
-        // проыеряем данные на корректность
-        if ((size < 1) || (size > 10000)) {
-            printf("incorrect number of figures = %d. Set 0 < x <= 10000\n", size);
-            return 3;
-        }
-
-        // Инициализируем массив.
-        container->Init(&size);
-
-        // Считываем данные.
-        container->In(file, size);
-        fclose(file);
-
+    // Ввод данных.
+    if (!strcmp(argv[1], "-f")) {
+        // Чтение из файла.
+        std::cout << "Read from file. . .\n";
+        std::ifstream input(argv[2]);
+        container->in(input);
+        std::cout << "Read from file finished!\n";
     } else {
-        // Иначе генерируем рандомные тесты.
-
-        // Проверяем корректность аргументов.
-        if (!strcmp(argv[1], "-f") && !strcmp(argv[1], "-n")) {
-            error();
+        // Рандомное заполнение.
+        std::cout << "Generate random items. . .\n";
+        if (!strcmp(argv[1], "-n")) {
+            int size = atoi(argv[2]);
+            if ((size < 1) || (size > 10000)) {
+                std::cout << "incorrect number of vehicles = "
+                          << size
+                          << ". Set 0 < number <= 10000\n";
+                return 3;
+            }
+            container->inRnd(size);
+            std::cout << "Generate random items finished!\n";
+        } else {
+            std::cout << "incorrect count of vehicles!\n";
             return 2;
         }
-
-        // Инициализируем массив.
-        container->Init(&size);
-
-        // Используем системные часы в качестве сида для рандомайзера.
-        srand((unsigned int) (time(0)));
-
-        // Заполнение контейнера.
-        container->InRnd(size);
     }
 
-    // Выводим размер.
-    printf("size = %d\n", size);
+    // Вывод содержимого контейнера в файл.
+    std::cout << "Filling unsorted container. . .\n";
+    std::ofstream unsortedOutput(argv[3]);
+    unsortedOutput << "Filled container:\n";
+    container->out(unsortedOutput);
+    std::cout << "Unsorted container filled!\n";
 
-    // Записываем результат в файл.
-    file = fopen(argv[3], "w+");
-    container->Out(file);
-    fclose(file);
-
-    // Сортируем и записываем результаты.
-    file = fopen(argv[4], "w+");
-
+    // Сортировка.
+    std::cout << "Sorting. . .\n";
     container->HeapSort();
+    std::cout << "Sorted!\n";
 
-    container->Out(file);
-    fprintf(file, "\n");
-    fclose(file);
+    // Вывод отсортированного списка.
+    std::cout << "Filling sorted container. . .\n";
+    std::ofstream sortedOutput(argv[4]);
+    sortedOutput << "Sorted container:\n";
+    container->out(sortedOutput);
+    std::cout << "Sorted container filled!\n";
 
-    // Очищаем контейнер.
+    // Очистка памяти.
+    std::cout << "Clear container. . .\n";
     delete container;
+    std::cout << "Clear container finished!\n";
 
-    // Конец отсчета времени.
-    unsigned int end_time = clock();
+    // Конец работы.
+    clock_t end = clock();
 
-    printf("Finish (%f) ms", clock()/1000000.0); // время работы программы
+    // Рассчет времени работы.
+    double seconds = (double)(end - start) / CLOCKS_PER_SEC;
+    std::cout << "Time: " << seconds;
+
     return 0;
 }

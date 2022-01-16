@@ -78,7 +78,7 @@ if __name__ == '__main__':
     # Print results in output file.
     unsorted_file = open(sys.argv[3], 'w+')
 
-    print(f"Start filling file \"{sys.argv[3]}\". . .")
+    print("Start filling file. . .")
 
     # Write data in file.
     Container.out(cont, unsorted_file)

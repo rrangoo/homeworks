@@ -36,12 +36,11 @@ void out(Container &container, std::ofstream &output) {
     }
 }
 
-
 // Меняем местами элементы.
 void swap(Vehicle *a, Vehicle *b) {
-    Vehicle plant= *a;
+    Vehicle vehicle = *a;
     *a = *b;
-    *b = plant;
+    *b = vehicle;
 }
 
 // Реализация сортировки.
